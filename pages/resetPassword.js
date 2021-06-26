@@ -8,11 +8,11 @@ export default function Home() {
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
   const [submissionError, setSubmissionError] = useState(false);
 
-  const postSignInData = ({email, password}) => {
+  const postPasswordResetData = ({email, oldPassword, newPassword}) => {
     setSubmissionError(false);
-		axios.post('http://localhost:5000/primaryLenders/auth/login', { email, password })
+		axios.post('http://localhost:5000/primaryLenders/auth/resetPassword', { email, oldPassword, newPassword })
 		.then(({ data }) => {
-			console.log(data);
+			cookies.set('pToken', data.pToken);
 		}).catch((error) => {
       setSubmissionError(error.response.data)
     });
@@ -29,7 +29,7 @@ export default function Home() {
             alignItems="center"
             justifyContent="center"
           >
-            <form onSubmit={handleSubmit(postSignInData)}>
+            <form onSubmit={handleSubmit(postPasswordResetData)}>
               <Box
                 id="box"
                 bg="white"
@@ -49,23 +49,16 @@ export default function Home() {
                 justifyContent="center"
               >
                 <Box fontSize="40px">
-                  Lender Login
+                  Reset Password
                 </Box>
                 {submissionError && (
                   <Box
                     color={theme.colors.red}
                   >
-                    {submissionError === 'Password not reset' ? (
-                      <span>
-                        Password not reset.
-                        Please click
-                        <a href="/resetPassword" style={{ color: `${theme.colors.primary} !important`}}> here </a>
-                        to reset.
-                      </span>
-                    ) : submissionError}
+                    {submissionError}
                   </Box>
                 )}
-                <Box
+								<Box
                   mt="25px"
                   fontWeight="500"
                 >
@@ -79,28 +72,68 @@ export default function Home() {
                     required: true
                   })}
                 />
-                {errors.lender_name && (
+                {errors.email && (
                   <Box color={theme.colors.red}>
-                    Please enter a valid Name.
+                    Please enter a valid email.
+                  </Box>
+                )}
+                <Box
+                  mt="25px"
+                  fontWeight="500"
+                >
+                  Password From Email
+                </Box>
+                <Input
+                  type="password"
+                  mt="5px"
+                  placeholder="Password From Email"
+                  {...register("oldPassword", { 
+                    required: true
+                  })}
+                />
+                {errors.oldPassword && (
+                  <Box color={theme.colors.red}>
+                    Please enter a valid password.
                   </Box>
                 )}
                 <Box
                   fontWeight="500"
                   mt="25px"
                 >
-                  Password
+                  New Password
                 </Box>
                 <Input
                   type="password"
                   mt="5px"
-                  placeholder="Password"
-                  {...register("password", { 
-                    required: true
+                  placeholder="New Password"
+                  {...register("newPassword", { 
+										required: true,
+										validate: value => value !== watch('oldPassword')
                   })}
                 />
-                {errors.lender_name && (
+								{errors.newPassword && (
                   <Box color={theme.colors.red}>
-                    Please enter a valid Name.
+                    Can not match old password.
+                  </Box>
+                )}
+								<Box
+                  fontWeight="500"
+                  mt="25px"
+                >
+                  New Password
+                </Box>
+                <Input
+                  type="password"
+                  mt="5px"
+                  placeholder="Confirm Password"
+                  {...register("confirmPassword", { 
+										required: true,
+										validate: value => value === watch('newPassword')
+                  })}
+                />
+								{errors.confirmPassword && (
+                  <Box color={theme.colors.red}>
+                    Passwords donot match.
                   </Box>
                 )}
                 <Flex
@@ -111,7 +144,7 @@ export default function Home() {
                     w="150px"
                     type="submit"
                   >
-                    Login
+                    Reset Password
                   </Button>
                 </Flex>
               </Box>

@@ -11,8 +11,8 @@ pool();
 
 //routes
 
-app.use("/loans", require("./routes/loans"));
-// app.use("/", require("./routes/scoreCalculator"));
+app.use("/primaryLenders/loans", require("./routes/loans"));
+app.use("/primaryLenders/auth", require("./routes/login"));
 
 app.listen(5000, () => {
   console.log(`Server is starting on port 5000`);
