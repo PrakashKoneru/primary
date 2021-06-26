@@ -36,3 +36,4 @@ yarn-error.log*
 #api
 /pages/api/database.sql
 /pages/api/.env
+pages/api/database.sql
