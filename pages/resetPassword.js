@@ -35,14 +35,12 @@ export default function Home() {
                 bg="white"
                 border={`0.3px solid ${theme.colors.secondary}`}
                 borderRadius="3px"
-                // width={{ sm: "100%", md: "50%"}}
-                minWidth={{ sm: "auto", md: "600px"}}
+                minWidth={{ sm: "325px", md: "600px"}}
                 maxW="600px"
                 minHeight={{ sm: "400px", md: "350px", lg: "400px" }}
                 w={{ sm: "100%", md: "auto" }}
-                py="10px"
+                py="50px"
                 px="20px"
-                mx="20px"
                 my="15px"
                 display="flex"
                 flexDirection="column"

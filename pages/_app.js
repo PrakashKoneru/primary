@@ -1,6 +1,6 @@
 import React from 'react';
 import '../styles/globals.css'
-import { ChakraProvider, extendTheme } from "@chakra-ui/react"
+import { ChakraProvider, extendTheme, Container } from "@chakra-ui/react"
 import theme from '../styles/theme';
 import Head from 'next/head'
 import Header from './components/header';

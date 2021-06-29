@@ -3,6 +3,7 @@ import { ThemeContext } from './_app';
 import { Box, Input, Flex, Button } from '@chakra-ui/react';
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import Cookies from 'js-cookie';
 
 export default function Home() {
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
@@ -12,7 +13,7 @@ export default function Home() {
     setSubmissionError(false);
 		axios.post('http://localhost:5000/primaryLenders/auth/login', { email, password })
 		.then(({ data }) => {
-			console.log(data);
+			Cookies.set('pToken', data.pToken);
 		}).catch((error) => {
       setSubmissionError(error.response.data)
     });
@@ -35,14 +36,12 @@ export default function Home() {
                 bg="white"
                 border={`0.3px solid ${theme.colors.secondary}`}
                 borderRadius="3px"
-                // width={{ sm: "100%", md: "50%"}}
-                minWidth={{ sm: "auto", md: "600px"}}
+                minWidth={{ sm: "325px", md: "600px"}}
                 maxW="600px"
                 minHeight={{ sm: "400px", md: "350px", lg: "400px" }}
                 w={{ sm: "100%", md: "auto" }}
                 py="10px"
                 px="20px"
-                mx="20px"
                 my="15px"
                 display="flex"
                 flexDirection="column"

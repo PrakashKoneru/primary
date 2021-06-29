@@ -14,6 +14,13 @@ const Button = {
       backgroundColor: 'transparent',
       border: '1px solid primary'
     },
+    loanCard: {
+      borderRadius: '5px',
+      textAlign: 'center',
+      padding: '5px 15px',
+      cursor: 'pointer',
+      border: `1px solid rgba(224,210,210, 0.6)`
+    }
   }
 }
 

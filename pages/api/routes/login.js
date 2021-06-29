@@ -11,7 +11,6 @@ router.post("/resetPassword", async (req, res) => {
       email
 		]);
 
-		console.log(lender);
 		if (lender.rows.length === 0) {
       return res.status(401).json("Lender Doesnot Exist.");
 		} 
@@ -36,8 +35,8 @@ router.post("/resetPassword", async (req, res) => {
 					if (error) {
 						throw error
 					}
-					const jwtToken = jwtGenerator(lender.rows[0].lender_id);
-					return res.json({ jwtToken });
+					const pToken = jwtGenerator(lender.rows[0].lender_id);
+					return res.json({ pToken });
 				}
 			);
 		}
@@ -71,8 +70,8 @@ router.post("/login", async (req, res) => {
     if (!validPassword) {
       return res.status(401).json("Invalid Credential");
     }
-    const jwtToken = jwtGenerator(lender.rows[0].lender_id);
-    return res.json({ jwtToken });
+    const pToken = jwtGenerator(lender.rows[0].lender_id);
+    return res.json({ pToken });
 	} catch(err) {
 		console.error(err.message);
 		res.status(500).send("Server error");
