@@ -8,7 +8,6 @@ import LoanView from './components/loanView';
 import GraphView from './components/graphView';
 import Cookies from "js-cookie";
 
-
 const Loans = () => {
 	const navList = [
 		'New Loans',
@@ -28,7 +27,6 @@ const Loans = () => {
 			}
 		);
 		setNewLoans(newLoans)
-		console.log('loans', newLoans.length);
 	}, [])
 	
 	return (

@@ -6,7 +6,6 @@ import LoanCard from './reUsable/loanCard';
 import { ThemeContext } from '../_app';
 import fieldLineUp from './utils/fieldLineUp';
 
-
 const LoanView = ({ loans }) => {
 	const [sortBy, setSortBy] = useState('funded_amnt');
     return (

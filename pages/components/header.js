@@ -11,6 +11,7 @@ import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import {Link as NextLink} from 'next';
 import { useRouter } from 'next/router';
 import { disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
+import Cookies from 'js-cookie';
 
 const NavLink = ({ children }) => (
   <Link
@@ -27,8 +28,9 @@ const NavLink = ({ children }) => (
 );
 
 export default function Simple() {
+	const isLoggedIn = Cookies.get('pToken');
 	const [disableScroll, setScroll] = useState(false);
-  const { isOpen, onOpen, onClose } = useDisclosure();
+	const { isOpen, onOpen, onClose } = useDisclosure();
 	const { pathname } = useRouter();
 	const borderBottom='#19858F'
 	const targetRef = React.createRef();
@@ -137,7 +139,8 @@ export default function Simple() {
 							maxHeight="90px"
 							py="1px"
 						>
-							<Link
+							{isLoggedIn && (<Link
+								onClick={() => Cookies.remove('pToken')}
 								as={NextLink}
 								maxHeight="90px"
 								variant="navLink"
@@ -148,21 +151,8 @@ export default function Simple() {
 								boxShadow={pathname === '/' ? '2px 2px 10px rgba(0, 0, 0, 0.5)' : ''}
 								// borderBottom={pathname === '/' ? `3px solid ${borderBottom}` : ''}
 							>
-								Link1
-							</Link>
-							<Link
-								href='/'
-								as={NextLink}
-								variant="navLink"
-								maxHeight="90px"
-								h="100%"
-								bg={pathname === '/investors' ? 'white' : ''}
-								boxShadow={pathname === '/investors' ? '2px 2px 10px rgba(0, 0, 0, 0.5)' : ''}
-								borderRadius="5px"
-								// borderBottom={pathname === '/investors' ? `5px solid ${borderBottom}` : ''}
-							>
-								Link 2
-							</Link>
+								Log Out
+							</Link>)}
 						</Flex>
 					</HStack>
         </Flex>
@@ -190,31 +180,18 @@ export default function Simple() {
 							fontSize="25px"
 						>
 							<Link
-								style={{
-									height: 'auto',
-									marginTop: 'calc(50vh - 150px)'
-								}}
+								onClick={() => Cookies.remove('pToken')}
 								as={NextLink}
-								key='/'
+								maxHeight="90px"
+								variant="navLink"
 								href='/'
-								variant="navLink"
-								borderBottom={pathname === '/' ? `0.5px solid #C3C9EB` : ''}
+								mr="5px"
+								bg={pathname === '/' ? 'white' : ''}
+								borderRadius="5px"
+								boxShadow={pathname === '/' ? '2px 2px 10px rgba(0, 0, 0, 0.5)' : ''}
+								// borderBottom={pathname === '/' ? `3px solid ${borderBottom}` : ''}
 							>
-								Borrowers
-							</Link>
-							<Link
-								style={{
-									height: 'auto',
-									marginTop: '10px'
-								}}
-								as={NextLink}
-								key='/investors'
-								href='/investors'
-								variant="navLink"
-								h="100%"
-								borderBottom={pathname === '/investors' ? `0.5px solid #C3C9EB` : ''}
-							>
-								Lending Partners
+								Log Out
 							</Link>
 						</Flex>
           </Box>

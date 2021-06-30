@@ -1,14 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../styles/globals.css'
 import { ChakraProvider, extendTheme, Container } from "@chakra-ui/react"
 import theme from '../styles/theme';
 import Head from 'next/head'
 import Header from './components/header';
+import { useRouter } from 'next/router';
+import Cookies from 'js-cookie';
+import Login from './components/reUsable/login';
 
 const themeHelper = extendTheme({ ...theme })
 export const ThemeContext = React.createContext(themeHelper);
 
 function MyApp({ Component, pageProps }) {
+  const router = useRouter();
+  const isLoggedIn = Cookies.get('pToken');
+  // router.push('/loans');
+
+  useEffect(() => {
+    if(!isLoggedIn) {
+      router.push('/')
+    } else {
+      router.push('/loans')
+    }
+  }, [])
+  
   return (
     <>
       <Head>
@@ -19,7 +34,7 @@ function MyApp({ Component, pageProps }) {
       <ChakraProvider theme={themeHelper}>
         <ThemeContext.Provider value={themeHelper}>
           <Header h="75px"/>
-          <Component {...pageProps} />
+          {!isLoggedIn ? <Login /> : <Component {...pageProps} />}
         </ThemeContext.Provider>
       </ChakraProvider>
     </>

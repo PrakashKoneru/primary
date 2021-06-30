@@ -256,7 +256,6 @@ const GraphView = ({ props }) => {
 						>
 							<Flex
 								w={{ md: "50%", sm: "100%" }}
-								h="400px"
 								justifyContent="baseline"
 								alignItems="center"
 								flexDirection="column"
@@ -300,7 +299,7 @@ const GraphView = ({ props }) => {
 								justifyContent="center"
 								alignItems="center"
 								flexDirection="column"
-								mt={{sm: "275px", md: "0px"}}
+								mt={{sm: "150px", md: "0px"}}
 							>
 								<Flex
 									justifyContent="center"
