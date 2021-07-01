@@ -34,7 +34,7 @@ function MyApp({ Component, pageProps }) {
       <ChakraProvider theme={themeHelper}>
         <ThemeContext.Provider value={themeHelper}>
           <Header h="75px"/>
-          {!isLoggedIn ? <Login /> : <Component {...pageProps} />}
+          {!isLoggedIn ? <Login {...pageProps} /> : <Component {...pageProps} />}
         </ThemeContext.Provider>
       </ChakraProvider>
     </>

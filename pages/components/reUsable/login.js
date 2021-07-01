@@ -27,6 +27,8 @@ export default function Login() {
       {(theme) => {
         return (
           <Flex
+            id="loanFlex"
+            key={Math.random()}
             bg={theme.colors.bgBlue}
             h="calc(100vh - 100px)"
             w="100%"

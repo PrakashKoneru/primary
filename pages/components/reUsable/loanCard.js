@@ -5,7 +5,7 @@ import fieldLineUp from '../utils/fieldLineUp';
 import Cookies from "js-cookie";
 import axios from 'axios';
 
-const LoanCard = ({ loans, key }, ref) => {
+const LoanCard = ({ loans, key, sortBy, filterBy }, ref) => {
 	const updateLoan = ({ loan_id, approval_status }) => {
 		console.log(loan_id, approval_status)
 		axios.post('http://localhost:5000/primaryLenders/loans/update',
@@ -19,6 +19,7 @@ const LoanCard = ({ loans, key }, ref) => {
 			console.log(data);
 		})
 	}
+
 	return (
 		<ThemeContext.Consumer>
 			{(theme) => {
@@ -30,7 +31,11 @@ const LoanCard = ({ loans, key }, ref) => {
 						ml={{ md: "30px", sm: "0px" }}
 						mt={{ md: "0px", sm: "30px" }}
 					>
-						{loans && loans.map((loan, index) => {
+						{loans && loans.sort((a, b) => {
+							if(a[sortBy] < b[sortBy]) { return -1 }
+							if(a[sortBy] > b[sortBy]) { return 1 }
+							if(a[sortBy] === b[sortBy]) { return 0 }
+						}).map((loan, index) => {
 							return (
 								<div key={loan.loan_id}>
 									<Flex

@@ -8,6 +8,8 @@ import fieldLineUp from './utils/fieldLineUp';
 
 const LoanView = ({ loans }) => {
 	const [sortBy, setSortBy] = useState('funded_amnt');
+	const [filterBy, setFilterBy] = useState(null);
+
     return (
         <ThemeContext.Consumer>
 					{(theme) => {
@@ -31,8 +33,8 @@ const LoanView = ({ loans }) => {
 											<Select
 												name="loans"
 												id="loans"
-												// onChange={(e) => setSortBy(e.target.value)}
-												style= {{border: `1px solid ${theme.colors.gray}`}}
+												onChange={(e) => setSortBy(e.target.value)}
+												style = {{border: `1px solid ${theme.colors.gray}`}}
 											>
 												{fieldLineUp.map((item) => {
 													return(
@@ -81,7 +83,7 @@ const LoanView = ({ loans }) => {
 													<div style={{display: 'flex', marginTop: '7px'}}>
 														<Select 
 															style={{ marginTop: '0px', fontSize: '14px', border: '1px solid rgba(224,210,210, 0.6)'}}
-															// onChange={(e) => setFilterBy(e.target.value)}
+															onChange={(e) => setFilterBy(e.target.value)}
 														>
 															<option value="">---</option>
 															<option value="A">A</option>
@@ -94,7 +96,13 @@ const LoanView = ({ loans }) => {
 										</div>
 									</Box>
 								</Box>
-								{loans && (<LoanCard loans={loans} />)}
+								{loans && (
+									<LoanCard
+										loans={loans}
+										sortBy={sortBy}
+										filterBy={filterBy}
+									/>
+								)}
 							</Flex>
 						)
 					}}

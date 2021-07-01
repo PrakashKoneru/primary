@@ -34,6 +34,8 @@ const Loans = () => {
 			{(theme) => {
 				return (
 					<Container
+						id="container"
+						display="block"
 						padding={{
 							md: "0px 50px",
 							sm: "0px 30px"
