@@ -4,10 +4,10 @@ import { ThemeContext } from '../../_app';
 import fieldLineUp from '../utils/fieldLineUp';
 import Cookies from "js-cookie";
 import axios from 'axios';
+import Link from 'next/link';
 
 const LoanCard = ({ loans, key, sortBy, filterBy }, ref) => {
 	const updateLoan = ({ loan_id, approval_status }) => {
-		console.log(loan_id, approval_status)
 		axios.post('http://localhost:5000/primaryLenders/loans/update',
 			{ loan_id, approval_status },
 			{
@@ -15,9 +15,7 @@ const LoanCard = ({ loans, key, sortBy, filterBy }, ref) => {
 					pToken: Cookies.get('pToken')
 				}
 			}
-		).then((data) => {
-			console.log(data);
-		})
+		)
 	}
 
 	return (
@@ -118,8 +116,7 @@ const LoanCard = ({ loans, key, sortBy, filterBy }, ref) => {
 													width="110px"
 													variant="loanCard"
 												>
-													All Details
-													{/* <Link to={`/loans/${index}`}>All Details</Link> */}
+													<Link href={`/loans/${loan.loan_id}`}>All Details</Link>
 												</Button>
 											</Flex>
 										</Box>

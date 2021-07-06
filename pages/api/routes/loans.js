@@ -5,7 +5,6 @@ const pool = require("../db.js");
 
 router.get("/new", async (req, res) => {
 	try {
-		// const loans = await pool().query("SELECT loan_id, loan_amnt, term, interest_rate_percent, loan_sub_grade FROM loans WHERE approval_status = $1", ["new"]);
 		const loans = await pool().query("SELECT * FROM loans WHERE approval_status = $1", ["new"]);
 		return res.json({ loans: loans.rows });
 	} catch(err) {
@@ -14,9 +13,27 @@ router.get("/new", async (req, res) => {
 	}
 });
 
+router.post("/details", async (req, res) => {
+	try {
+		const { loan_id, lender_id } = req.body;
+		const loan = await pool().query("SELECT * FROM loans WHERE loan_id = $1", [loan_id]);
+		if(loan.rows.length === 0) {
+			res.status(404).send("Invalid Request")
+		}
+
+		if(loan.rows[0].approval_status === "approved" && loan.rows[0].approver_id != lender_id) {
+			res.status(401).send("Invalid Request")
+		}
+
+		return res.json({ loan: loan.rows[0] });
+	} catch(err) {
+		console.error(err.message);
+		res.status(500).send("Server error");
+	}
+});
+
 router.get("/pending", async (req, res) => {
 	try {
-		// const loans = await pool().query("SELECT loan_id, loan_amnt, term, interest_rate_percent, loan_sub_grade FROM loans WHERE approval_status = $1", ["new"]);
 		const loans = await pool().query("SELECT * FROM loans WHERE approval_status = $1", ["pending"]);
 		return res.json({ loans: loans.rows });
 	} catch(err) {
@@ -115,9 +132,3 @@ router.post("/update", async (req, res) => {
 })
 
 module.exports = router;
-
-
-// INSERT INTO sal_emp
-//     VALUES ('Carol', ARRAY[]);
-
-// 		UPDATE loans SET pending_ids = ARRAY[];
