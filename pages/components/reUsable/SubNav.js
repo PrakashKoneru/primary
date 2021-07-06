@@ -17,7 +17,9 @@ const SubNav = ({ navList = [], onClick, ...rest }) => {
 								<Flex
 									justifyContent="center"
 									alignItems="center"
-									ml={{ md: index === 0 ? "0px" : "10px" }}
+									mr={{ md: "10px", sm: "0px" }}
+									ml={{ md: "0px", sm: index%2 != 0 ? '6px' : "0px" }}
+									mb={{ md: index=== navList.length ? "0px" : "10px", sm: "5px" }}
 									w={{
 										sm: "49%",
 										md: "auto"

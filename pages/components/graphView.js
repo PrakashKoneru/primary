@@ -45,7 +45,7 @@ const GraphView = ({ props }) => {
 			}
 		})
 		.then(({ data }) => {
-			setApprovedLoans(data.approvedLoans)
+			setApprovedLoans(data.loans)
 		})
 	}, [])
 

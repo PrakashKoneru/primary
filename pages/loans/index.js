@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Input, Flex, Container, Select } from '@chakra-ui/react';
 import axios from 'axios';
-import SubNav from './components/reUsable/SubNav';
-import { ThemeContext } from './_app';
-import fieldLineUp from './components/utils/fieldLineUp';
-import LoanView from './components/loanView';
-import GraphView from './components/graphView';
+import SubNav from '../components/reUsable/SubNav';
+import { ThemeContext } from '../_app';
+import fieldLineUp from '../components/utils/fieldLineUp';
+import LoanView from '../components/loanView';
+import GraphView from '../components/graphView';
 import Cookies from "js-cookie";
 
 const Loans = () => {
@@ -16,17 +16,23 @@ const Loans = () => {
 		'Approved Loans',
 		'Graph View'
 	];
-	const [newLoans, setNewLoans] = useState(null);
+	const [loans, setLoans] = useState(null);
 	const [selectedNav, setSelectedNav] = useState(navList[0]);
-	useEffect(async() => {
-		const { data: { newLoans } } = await axios.get('http://localhost:5000/primaryLenders/loans/new', 
-			 {
+	const getLoans = async (index) => {
+		if(navList[index] === "Graph View") return setSelectedNav(navList[index]);
+		const { data: { loans } } = await axios.get(`http://localhost:5000/primaryLenders/loans/${navList[index].split(" ")[0].toLowerCase()}`,
+				{
 				headers: {
 					pToken: Cookies.get('pToken')
 				}
 			}
 		);
-		setNewLoans(newLoans)
+		await setLoans(loans)
+		await setSelectedNav(navList[index])
+	}
+
+	useEffect(async() => {
+		getLoans(0)
 	}, [])
 	
 	return (
@@ -46,17 +52,18 @@ const Loans = () => {
 						>
 							<SubNav
 								navList={navList}
-								onClick={(index) => setSelectedNav(navList[index])}
+								onClick={(index) => {
+									getLoans(index)
+								}}
 							/>
 						</Box>
-						{selectedNav === navList[0] && (
+						{selectedNav === "Graph View" ? (
+							<GraphView /> 
+						) : 
 							<LoanView
-								loans={newLoans}
+								loans={loans}
 							/>
-						)}
-						{selectedNav === navList[navList.length - 1] && (
-							<GraphView />
-						)}
+						}
 					</Container>
 				)
 			}}

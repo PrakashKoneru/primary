@@ -16,13 +16,13 @@ function MyApp({ Component, pageProps }) {
   const isLoggedIn = Cookies.get('pToken');
   // router.push('/loans');
 
-  useEffect(() => {
-    if(!isLoggedIn) {
-      router.push('/')
-    } else {
-      router.push('/loans')
-    }
-  }, [])
+  // useEffect(() => {
+  //   if(!isLoggedIn) {
+  //     router.push('/')
+  //   } else {
+  //     router.push('/loans')
+  //   }
+  // }, [])
   
   return (
     <>
@@ -34,7 +34,7 @@ function MyApp({ Component, pageProps }) {
       <ChakraProvider theme={themeHelper}>
         <ThemeContext.Provider value={themeHelper}>
           <Header h="75px"/>
-          {!isLoggedIn ? <Login {...pageProps} /> : <Component {...pageProps} />}
+          <Component {...pageProps} />
         </ThemeContext.Provider>
       </ChakraProvider>
     </>

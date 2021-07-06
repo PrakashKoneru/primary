@@ -7,7 +7,7 @@ import { ThemeContext } from '../_app';
 import fieldLineUp from './utils/fieldLineUp';
 
 const LoanView = ({ loans }) => {
-	const [sortBy, setSortBy] = useState('funded_amnt');
+	const [sortBy, setSortBy] = useState('loan_amnt');
 	const [filterBy, setFilterBy] = useState(null);
 
     return (
@@ -111,10 +111,3 @@ const LoanView = ({ loans }) => {
 }
 
 export default LoanView;
-
-{/* <MappedCards
-													member={member}
-													index={index}
-													fieldLineUp={fieldLineUp}
-													setAcceptedData={setAcceptedData}
-												/> */}

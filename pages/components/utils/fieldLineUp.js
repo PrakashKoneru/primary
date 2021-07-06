@@ -1,63 +1,36 @@
+const curencyFormatter = new Intl.NumberFormat('en-US', {
+	currency: 'USD',
+});
 const fieldLineUp = [
 	{
-		title: 'Requested Amount',
-		def: 'funded_amnt'
+		title: 'Loan Amount',
+		def: 'loan_amnt',
+		format: (value) => `$${curencyFormatter.format(value)}`
 	},
 	{
 		title: 'Term',
-		def: 'term'
+		def: 'term',
+		format: (value) => { return value.replace("_", " ") }
 	},
 	{
 		title: 'Interest Rate',
-		def: 'int_rate'
+		def: 'interest_rate_percent',
+		format: (value) => { return `${value}%` }
 	},
 	{
 		title: 'Annual Income',
-		def: 'annual_inc'
+		def: 'annual_inc',
+		format: (value) => `$${curencyFormatter.format(value)}`
 	},
 	{
-		title: 'Loan Grade',
-		def: 'grade'
+		title: 'Loan Sub Grade',
+		def: 'loan_sub_grade',
+		format: (value) => { return value }
 	},
 	{
-		title: 'Installment Size',
-		def: 'installment'
-	},
-	{
-		title: 'Employer Name',
-		def: 'emp_title'
-	},
-	{
-		title: 'Home Ownership',
-		def: 'home_ownership'
-	},
-	{
-		title: 'Verification Status',
-		def: 'verification_status'
-	},
-	{
-		title: 'Issue Date',
-		def: 'issue_d'
-	},
-	{
-		title: 'Last Payment Date',
-		def: 'last_pymnt_d'
-	},
-	{
-		title: 'Loan Status',
-		def: 'loan_status'
-	},
-	{
-		title: 'Fico High',
-		def: 'fico_range_high'
-	},
-	{
-		title: 'Inquiries',
-		def: 'inq_last_6mths'
-	},
-	{
-		title: 'Open Accounts',
-		def: 'open_acc'
+		title: 'Payment Prob.',
+		def: 'default_probability_percent_at_issue',
+		format: (value) => { return `${(100 - Number(value).toFixed(2))}%` }
 	},
 ];
 

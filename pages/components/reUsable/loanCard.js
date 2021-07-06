@@ -50,17 +50,18 @@ const LoanCard = ({ loans, key, sortBy, filterBy }, ref) => {
 											flexWrap="wrap"
 											w="100%"
 											justifyContent="space-between"
+											alignItems="center"
 										>
 											{fieldLineUp.slice(0, 6).map((field, index) => {
 												return (
 													<Box
-														w={{sm: "45%", md: "auto" }}
+														w={{sm: "46%", md: "auto" }}
 														py="10px"
-														ml={index===0 ? "0px" : "10px"}
+														ml={{md: index===0 ? "0px" : "10px", sm: "10px"}}
 														whiteSpace="wrap"
 													>
 														<Box>{field.title}</Box>
-														<Box>{loan[field.def]}</Box>
+														<Box>{field.format(loan[field.def])}</Box>
 													</Box>
 												)
 											})}
