@@ -14,14 +14,16 @@ const Loans = () => {
 		'Pending Loans',
 		'Rejected Loans',
 		'Approved Loans',
-		'Graph View'
+		'Approved Graphs',
+		'Completed Loans',
+		'Completed Graphs',
 	];
 	const [loans, setLoans] = useState(null);
 	const [selectedNav, setSelectedNav] = useState(navList[0]);
 	const getLoans = async (index) => {
-		if(navList[index] === "Graph View") return setSelectedNav(navList[index]);
+		if(navList[index].includes("Graph")) return setSelectedNav(navList[index]);
 		const { data: { loans } } = await axios.get(`http://localhost:5000/primaryLenders/loans/${navList[index].split(" ")[0].toLowerCase()}`,
-				{
+			{
 				headers: {
 					pToken: Cookies.get('pToken')
 				}
@@ -56,8 +58,10 @@ const Loans = () => {
 								}}
 							/>
 						</Box>
-						{selectedNav === "Graph View" ? (
-							<GraphView /> 
+						{selectedNav.includes("Graph") ? (
+							<Box key={Math.random()}>
+								<GraphView selectedNav={selectedNav} />
+							</Box>
 						) : 
 							<LoanView
 								loans={loans}

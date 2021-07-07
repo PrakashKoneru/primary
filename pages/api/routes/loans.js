@@ -52,6 +52,24 @@ router.get("/rejected", async (req, res) => {
 	}
 });
 
+router.get("/completed", async (req, res) => {
+	try {
+		const completedLoans = await pool().query("SELECT * FROM loans WHERE approval_status = $1 AND approver_id = $2", [
+			"completed",
+			req.lender_id
+		]);
+		const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', "December"]
+		const loansWithMonths = completedLoans.rows.map((loan) => {
+			loan.issue_month = loan.loan_issue_date.slice(0, 3);
+			return loan
+		})
+		return res.json({ loans: loansWithMonths });
+	} catch(err) {
+		console.error(err.message);
+		res.status(500).send("Server error");
+	}
+});
+
 router.get("/approved", async (req, res) => {
 	try {
 		const approvedLoans = await pool().query("SELECT * FROM loans WHERE approval_status = $1 AND approver_id = $2", [

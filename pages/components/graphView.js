@@ -35,11 +35,11 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
   );
 };
 
-const GraphView = ({ props }) => {
+const GraphView = ({ selectedNav, ...props }) => {
 	const [approvedLoans, setApprovedLoans] = useState(null)
 	const [selectedGrade, setSelectedGrade] = useState('all');
 	useEffect(() => {
-		axios.get('http://localhost:5000/primaryLenders/loans/approved', {
+		axios.get(`http://localhost:5000/primaryLenders/loans/${selectedNav.split(" ")[0]}`, {
 			headers: {
 				pToken: Cookies.get('pToken')
 			}
@@ -130,6 +130,7 @@ const GraphView = ({ props }) => {
 				return (
 					<Container
 						padding={{ sm: "0px", md: "inherit" }}
+						key={selectedNav}
 					>
 						<Box
 							mt="30px"
