@@ -26,7 +26,8 @@ const LoanDetails = () => {
 			setLoanDetails(loan)
 		}
 	}, [id])
-
+	
+	if(!loanDetails) return null;
 	if(!id) return (<Flex alignItems="center" justifyContent="center">Loading...</Flex>)
 	return (
 		<ThemeContext.Consumer>
@@ -100,8 +101,8 @@ const LoanDetails = () => {
 											) : null
 										) : (
 											<Box>
-												<Box>
-													{/* <Box>{loanDetails['default_probability_percent_at_issue']}</Box> */}
+												<Box px="20px">
+													<Box>{`${parseInt(loanDetails['default_probability_percent_at_issue'])}%`}</Box>
 												</Box>
 											</Box>
 										)}
