@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ThemeContext } from '../_app';
 import axios from "axios";
 import Cookies from "js-cookie";
-import graphLineUp from './utils/graphLineUp'
+import graphLineUp from '../../utils/graphLineUp'
 import { Box, Input, Flex, Container, Select } from '@chakra-ui/react';
 import {
   BarChart,

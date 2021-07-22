@@ -21,7 +21,7 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
   );
 };
 
-const PaisaPie = ({ data, showPieCrumbs = true, ...rest }) => {
+const PaisaPie = ({ data = [], showPieCrumbs = true, ...rest }) => {
 	const fills = ['#0088FE', '#dd7876', '#FFBB28', 'brown', 'pink', 'black'];
 
 	if(!showPieCrumbs) {

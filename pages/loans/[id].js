@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { Box, Flex, Container } from '@chakra-ui/react';
 import axios from 'axios';
 import Cookies from "js-cookie";
-import loanFieldGroups from '../components/utils/loanFieldGroups';
+import loanFieldGroups from '../../utils/loanFieldGroups';
 import { ThemeContext } from '../_app';
 
 const LoanDetails = () => {

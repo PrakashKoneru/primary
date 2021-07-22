@@ -3,7 +3,7 @@ import { Box, Input, Flex, Container, Select } from '@chakra-ui/react';
 import axios from 'axios';
 import SubNav from '../components/reUsable/SubNav';
 import { ThemeContext } from '../_app';
-import fieldLineUp from '../components/utils/fieldLineUp';
+import fieldLineUp from '../../utils/fieldLineUp';
 import LoanView from '../components/loanView';
 import GraphView from '../components/graphView';
 import Cookies from "js-cookie";

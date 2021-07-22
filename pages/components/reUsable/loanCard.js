@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Input, Flex, Container, Select, Button } from '@chakra-ui/react';
 import { ThemeContext } from '../../_app';
-import fieldLineUp from '../utils/fieldLineUp';
+import fieldLineUp from '../../../utils/fieldLineUp';
 import Cookies from "js-cookie";
 import axios from 'axios';
 import Link from 'next/link';

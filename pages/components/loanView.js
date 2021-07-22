@@ -4,7 +4,7 @@ import axios from 'axios';
 import SubNav from './reUsable/SubNav';
 import LoanCard from './reUsable/loanCard';
 import { ThemeContext } from '../_app';
-import fieldLineUp from './utils/fieldLineUp';
+import fieldLineUp from '../../utils/fieldLineUp';
 
 const LoanView = ({ loans }) => {
 	const [sortBy, setSortBy] = useState('loan_amnt');
