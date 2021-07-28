@@ -1,4 +1,4 @@
 module.exports = {
   reactStrictMode: true,
-  assetPrefix: 'primary'
+  assetPrefix: process.env.NODE_ENV === 'production' ? 'primary' : ''
 }
