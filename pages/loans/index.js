@@ -22,7 +22,7 @@ const Loans = () => {
 	const [selectedNav, setSelectedNav] = useState(navList[0]);
 	const getLoans = async (index) => {
 		if(navList[index].includes("Graph")) return setSelectedNav(navList[index]);
-		const baseURL = process.env.NODE_ENV === 'production' ? `/primary/api/primaryLenders/loans/${navList[index].split(" ")[0].toLowerCase()}` : `http://localhost:5003/primaryLenders/loans/${navList[index].split(" ")[0].toLowerCase()}`;
+		const baseURL = process.env.NODE_ENV === 'production' ? `/primary/be/primaryLenders/loans/${navList[index].split(" ")[0].toLowerCase()}` : `http://localhost:5003/primaryLenders/loans/${navList[index].split(" ")[0].toLowerCase()}`;
 		const { data: { loans } } = await axios.get(baseURL,
 			{
 				headers: {
