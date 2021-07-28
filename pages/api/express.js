@@ -11,7 +11,7 @@ app.use(express.json());
 pool();
 
 //routes
-
+app.use("/", require("./routes/simpleGet"));
 app.use("/primaryLenders/loans", middlewareAuth, require("./routes/loans"));
 app.use("/primaryLenders/auth", require("./routes/login"));
 
