@@ -9,8 +9,9 @@ export default function Home() {
   const [submissionError, setSubmissionError] = useState(false);
 
   const postPasswordResetData = ({email, oldPassword, newPassword}) => {
+    const baseURL = process.env.NODE_ENV === 'production' ? '/primary/api/primaryLenders/auth/resetPassword' : 'http://localhost:5003/primaryLenders/auth/resetPassword';
     setSubmissionError(false);
-		axios.post('http://localhost:5000/primaryLenders/auth/resetPassword', { email, oldPassword, newPassword })
+		axios.post(baseURL, { email, oldPassword, newPassword })
 		.then(({ data }) => {
 			cookies.set('pToken', data.pToken);
 		}).catch((error) => {

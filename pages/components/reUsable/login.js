@@ -13,7 +13,8 @@ export default function Login() {
 
   const postSignInData = ({email, password}) => {
     setSubmissionError(false);
-		axios.post('http://localhost:5000/primaryLenders/auth/login', { email, password })
+    const baseURL = process.env.NODE_ENV === 'production' ? '/primary/api/primaryLenders/auth/login' : 'http://localhost:5003/primaryLenders/auth/login';
+		axios.post(baseURL, { email, password })
 		.then(({ data }) => {
 			Cookies.set('pToken', data.pToken);
 			router.push('/loans');

@@ -39,7 +39,8 @@ const GraphView = ({ selectedNav, ...props }) => {
 	const [approvedLoans, setApprovedLoans] = useState(null)
 	const [selectedGrade, setSelectedGrade] = useState('all');
 	useEffect(() => {
-		axios.get(`http://localhost:5000/primaryLenders/loans/${selectedNav.split(" ")[0]}`, {
+		const baseURL = process.env.NODE_ENV === 'production' ? `/primary/api/primaryLenders/loans/${selectedNav.split(" ")[0]}` : `http://localhost:5003/primaryLenders/loans/${selectedNav.split(" ")[0]}`;
+		axios.get(baseURL, {
 			headers: {
 				pToken: Cookies.get('pToken')
 			}
