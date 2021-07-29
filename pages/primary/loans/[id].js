@@ -3,8 +3,8 @@ import { useRouter } from 'next/router'
 import { Box, Flex, Container } from '@chakra-ui/react';
 import axios from 'axios';
 import Cookies from "js-cookie";
-import loanFieldGroups from '../../utils/loanFieldGroups';
-import { ThemeContext } from '../_app';
+import loanFieldGroups from '../../../utils/loanFieldGroups';
+import { ThemeContext } from '../../_app';
 
 const LoanDetails = () => {
 	// Figure a better way to extract loan ID than from route. try to avoid using loan_id in route name.

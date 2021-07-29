@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ThemeContext } from './_app';
+import { ThemeContext } from '../_app';
 import { Box, Input, Flex, Button } from '@chakra-ui/react';
 import { useForm } from "react-hook-form";
 import axios from "axios";

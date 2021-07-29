@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Input, Flex, Container, Select } from '@chakra-ui/react';
 import axios from 'axios';
-import SubNav from '../components/reUsable/SubNav';
-import { ThemeContext } from '../_app';
-import fieldLineUp from '../../utils/fieldLineUp';
-import LoanView from '../components/loanView';
-import GraphView from '../components/graphView';
+import SubNav from '../../components/reUsable/SubNav';
+import { ThemeContext } from '../../_app';
+import LoanView from '../../components/loanView';
+import GraphView from '../../components/graphView';
 import Cookies from "js-cookie";
 
 const Loans = () => {
