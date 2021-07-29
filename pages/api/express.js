@@ -9,7 +9,7 @@ const middlewareAuth = require("./middleware/authorize.js")
 app.use(cors());
 app.use(express.json());
 pool();
-
+console.log('called node js BE')
 //routes
 app.use("/", require("./routes/simpleGet"));
 app.use("/primaryLenders/loans", middlewareAuth, require("./routes/loans"));
