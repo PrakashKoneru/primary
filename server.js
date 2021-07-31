@@ -5,7 +5,7 @@ const middlewareAuth = require("./pages/api/middleware/authorize.js")
 const next = require("next");
 const { parse } = require('url')
 
-const port = parseInt(process.env.PORT, 10) || 3003
+const port = 3003
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 const handle = app.getRequestHandler();
