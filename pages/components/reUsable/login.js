@@ -17,7 +17,7 @@ export default function Login() {
 		axios.post(baseURL, { email, password })
 		.then(({ data }) => {
 			Cookies.set('pToken', data.pToken);
-			router.push('/loans');
+			router.push('/primary/loans');
 		}).catch((error) => {
       error.response && setSubmissionError(error.response.data)
     });
