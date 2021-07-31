@@ -11,7 +11,7 @@ export default function Home() {
 
   const postPasswordResetData = ({email, oldPassword, newPassword}) => {
     console.log('un rendered')
-    const baseURL =  '/primaryLenders/auth/resetPassword';
+    const baseURL =  '/primary/primaryLenders/auth/resetPassword';
     setSubmissionError(false);
 		axios.post(baseURL, { email, oldPassword, newPassword })
 		.then(({ data }) => {

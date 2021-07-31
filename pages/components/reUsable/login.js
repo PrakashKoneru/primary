@@ -13,7 +13,7 @@ export default function Login() {
 
   const postSignInData = ({email, password}) => {
     setSubmissionError(false);
-    const baseURL =  '/primaryLenders/auth/login';
+    const baseURL =  '/primary/primaryLenders/auth/login';
 		axios.post(baseURL, { email, password })
 		.then(({ data }) => {
 			Cookies.set('pToken', data.pToken);
@@ -64,7 +64,7 @@ export default function Login() {
                       <span>
                         Password not reset.
                         Please click
-                        <a href="/resetPassword" style={{ color: `${theme.colors.primary} !important`}}> here </a>
+                        <a href="/primary/resetPassword" style={{ color: `${theme.colors.primary} !important`}}> here </a>
                         to reset.
                       </span>
                     ) : submissionError}
