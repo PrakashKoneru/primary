@@ -110,7 +110,7 @@ export default function Simple() {
 						>
 							<Link
 								as={NextLink}
-								href='/'
+								href='/primary'
 							>
 								<img
 									cursor='pointer'
@@ -144,7 +144,7 @@ export default function Simple() {
 								as={NextLink}
 								maxHeight="90px"
 								variant="navLink"
-								href='/'
+								href='/primary'
 								mr="5px"
 								bg={pathname === '/' ? 'white' : ''}
 								borderRadius="5px"
@@ -184,7 +184,7 @@ export default function Simple() {
 								as={NextLink}
 								maxHeight="90px"
 								variant="navLink"
-								href='/'
+								href='/primary'
 								mr="5px"
 								bg={pathname === '/' ? 'white' : ''}
 								borderRadius="5px"

@@ -11,7 +11,7 @@ export default function Home() {
 
   const postPasswordResetData = ({email, oldPassword, newPassword}) => {
     console.log('un rendered')
-    const baseURL = process.env.NODE_ENV === 'production' ? 'http://localhost:5003/primaryLenders/auth/resetPassword' : 'http://localhost:5003/primaryLenders/auth/resetPassword';
+    const baseURL =  '/primaryLenders/auth/resetPassword';
     setSubmissionError(false);
 		axios.post(baseURL, { email, oldPassword, newPassword })
 		.then(({ data }) => {

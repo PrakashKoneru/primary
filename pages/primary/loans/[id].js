@@ -15,7 +15,7 @@ const LoanDetails = () => {
 
 	useEffect(async () => {
 		if(id) {
-			const baseURL = process.env.NODE_ENV === 'production' ? '/primary/be/primaryLenders/loans/details' : 'http://localhost:5003/primaryLenders/loans/details';
+			const baseURL = '/primary/primaryLenders/loans/details';
 			const { data: { loan }} = await axios.post(baseURL,
 				{ loan_id: id },
 				{

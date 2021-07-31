@@ -8,7 +8,7 @@ import Link from 'next/link';
 
 const LoanCard = ({ loans, key, sortBy, filterBy }, ref) => {
 	const updateLoan = ({ loan_id, approval_status }) => {
-		const baseURL = process.env.NODE_ENV === 'production' ? '/primary/be/primaryLenders/loans/update' : 'http://localhost:5003/primaryLenders/loans/update';
+		const baseURL =  '/primary/primaryLenders/loans/update';
 		axios.post(baseURL,
 			{ loan_id, approval_status },
 			{
@@ -117,7 +117,7 @@ const LoanCard = ({ loans, key, sortBy, filterBy }, ref) => {
 													width="110px"
 													variant="loanCard"
 												>
-													<Link href={`/loans/${loan.loan_id}`}>All Details</Link>
+													<Link href={`/primary/loans/${loan.loan_id}`}>All Details</Link>
 												</Button>
 											</Flex>
 										</Box>
