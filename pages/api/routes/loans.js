@@ -34,8 +34,20 @@ router.post("/details", async (req, res) => {
 
 router.get("/pending", async (req, res) => {
 	try {
+		const { lender_id } = req.body
 		const loans = await pool().query("SELECT * FROM loans WHERE approval_status = $1", ["pending"]);
-		return res.json({ loans: loans.rows });
+		// logic for hiding four loans to attach them in borrower onboarding flow. Need to remove after finalizing the actual transunion flow
+		const filteredLoans = loans.rows.filter((loan) => {
+			if (
+				loan.loan_id !== '8e359f42-9eab-4718-a004-99b35ba28d4d' &&
+				loan.loan_id !== '6996728d-8cde-4c3e-8808-08b892020754' &&
+				loan.loan_id !== '5e13e474-00f8-4a32-91c2-614a5eedd41e' &&
+				loan.loan_id !== '7c1ce11a-4f49-4f41-9919-1a269b3bef94'
+			) {
+				return loan
+			}
+		});
+		return res.json({ loans: filteredLoans });
 	} catch(err) {
 		console.error(err.message);
 		res.status(500).send("Server error");
