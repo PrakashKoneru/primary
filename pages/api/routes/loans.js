@@ -5,7 +5,7 @@ const pool = require("../db.js");
 
 router.get("/new", async (req, res) => {
 	try {
-		const loans = await pool().query("SELECT * FROM loans WHERE approval_status = $1", ["new"]);
+		const loans = await pool().query("SELECT * FROM loans WHERE approval_status = $1 LIMIT 100", ["new"]);
 		return res.json({ loans: loans.rows });
 	} catch(err) {
 		console.error(err.message);
@@ -35,7 +35,7 @@ router.post("/details", async (req, res) => {
 router.get("/pending", async (req, res) => {
 	try {
 		const { lender_id } = req.body
-		const loans = await pool().query("SELECT * FROM loans WHERE approval_status = $1", ["pending"]);
+		const loans = await pool().query("SELECT * FROM loans WHERE approval_status = $1 LIMIT 100", ["pending"]);
 		// logic for hiding four loans to attach them in borrower onboarding flow. Need to remove after finalizing the actual transunion flow
 		const filteredLoans = loans.rows.filter((loan) => {
 			if (
@@ -56,7 +56,7 @@ router.get("/pending", async (req, res) => {
 
 router.get("/rejected", async (req, res) => {
 	try {
-		const loans = await pool().query("SELECT * FROM loans WHERE approval_status = $1 AND $2 = ANY (rejected_ids)", ["rejected", req.lender_id]);
+		const loans = await pool().query("SELECT * FROM loans WHERE approval_status = $1 AND $2 = ANY (rejected_ids) LIMIT 100", ["rejected", req.lender_id]);
 		return res.json({ loans: loans.rows });
 	} catch(err) {
 		console.error(err.message);
@@ -84,7 +84,7 @@ router.get("/completed", async (req, res) => {
 
 router.get("/approved", async (req, res) => {
 	try {
-		const approvedLoans = await pool().query("SELECT * FROM loans WHERE approval_status = $1 AND approver_id = $2", [
+		const approvedLoans = await pool().query("SELECT * FROM loans WHERE approval_status = $1 AND approver_id = $2 LIMIT 100", [
 			"approved",
 			req.lender_id
 		]);
