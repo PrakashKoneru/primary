@@ -34,6 +34,7 @@ export default function Simple() {
 	const { pathname } = useRouter();
 	const borderBottom='#19858F'
 	const targetRef = React.createRef();
+	const LogoLink = Cookies.get('pToken') ? '/primary/loans' : "/primary";
 	
 	useEffect(() => {
 		if(disableScroll) {
@@ -43,6 +44,7 @@ export default function Simple() {
 			clearAllBodyScrollLocks();
 		}
 	}, [isOpen])
+	
   return (
     <>
       <Box
@@ -108,17 +110,17 @@ export default function Simple() {
 								md: 'flex-start'
 							}}
 						>
-							<Link
+							{/* <Link
 								as={NextLink}
-								href='/primary'
-							>
+								href={LogoLink}
+							> */}
 								<img
 									cursor='pointer'
 									src="/HeaderLogo.png"
 									height="54px"
 									width="150px"
 								/>
-							</Link>
+							{/* </Link> */}
 						</Flex>
           </HStack>
 					<HStack

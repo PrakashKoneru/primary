@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Box, Input, Flex, Container, Select } from '@chakra-ui/react';
 import axios from 'axios';
 import SubNav from './reUsable/SubNav';
-import LoanCard from './reUsable/loanCard';
+import LoansDeck from './reUsable/loansDeck';
 import { ThemeContext } from '../_app';
 import fieldLineUp from '../../utils/fieldLineUp';
 
@@ -96,12 +96,26 @@ const LoanView = ({ loans }) => {
 										</div>
 									</Box>
 								</Box>
-								{loans && (
-									<LoanCard
+								{loans ? (
+									<LoansDeck
 										loans={loans}
 										sortBy={sortBy}
 										filterBy={filterBy}
 									/>
+								) : (
+									<Flex
+										w="100%"
+										maxHeight={{ md: "100vh", sm: "auto" }}
+										overflowY="scroll"
+										ml={{ md: "30px", sm: "0px" }}
+										mt={{ md: "0px", sm: "30px" }}
+										alignItems="center"
+										justifyContent="center"
+										fontSize="50px"
+										color={theme.colors.secondary}
+									>
+										Loading...
+									</Flex>
 								)}
 							</Flex>
 						)

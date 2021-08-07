@@ -14,7 +14,6 @@ export const ThemeContext = React.createContext(themeHelper);
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const isLoggedIn = Cookies.get('pToken');
-  console.log('called primary');
   // router.push('/loans');
 
   // useEffect(() => {

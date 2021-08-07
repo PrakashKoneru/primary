@@ -5,7 +5,7 @@ const pool = require("../db.js");
 
 router.get("/new", async (req, res) => {
 	try {
-		const loans = await pool().query("SELECT * FROM loans WHERE approval_status = $1 LIMIT 100", ["new"]);
+		const loans = await pool().query("SELECT loan_id, loan_amnt, term, interest_rate_percent, annual_inc, loan_sub_grade, default_probability_percent_at_issue FROM loans WHERE approval_status = $1 LIMIT 100", ["new"]);
 		return res.json({ loans: loans.rows });
 	} catch(err) {
 		console.error(err.message);
@@ -125,8 +125,8 @@ router.post("/update", async (req, res) => {
 				if (error) {
 					throw error
 				}
-				// const loans = await pool().query("SELECT * FROM loans WHERE approval_status = $1", ["new"]);
-				return res.json({ status: 'approved' });
+				const loans = await pool().query("SELECT loan_id, loan_amnt, term, interest_rate_percent, annual_inc, loan_sub_grade, default_probability_percent_at_issue FROM loans WHERE approval_status = $1 LIMIT 100", ["new"]);
+				return res.json({ loans: loans.rows });
 			})
 		}
 
@@ -139,7 +139,8 @@ router.post("/update", async (req, res) => {
 				if (error) {
 					throw error
 				}
-				return res.json({ status: 'pending' });
+				const loans = await pool().query("SELECT loan_id, loan_amnt, term, interest_rate_percent, annual_inc, loan_sub_grade, default_probability_percent_at_issue FROM loans WHERE approval_status = $1 LIMIT 100", ["new"]);
+				return res.json({ loans: loans.rows });
 			})
 		}
 
@@ -152,7 +153,8 @@ router.post("/update", async (req, res) => {
 				if (error) {
 					throw error
 				}
-				return res.json({ status: 'rejected' });
+				const loans = await pool().query("SELECT loan_id, loan_amnt, term, interest_rate_percent, annual_inc, loan_sub_grade, default_probability_percent_at_issue FROM loans WHERE approval_status = $1 LIMIT 100", ["new"]);
+				return res.json({ loans: loans.rows });
 			})
 		}
 	} catch(err) {
