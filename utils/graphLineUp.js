@@ -1,3 +1,6 @@
+const curencyFormatter = new Intl.NumberFormat('en-US', {
+	currency: 'USD',
+});
 const graphLineUp = (loans = []) => {
 	let total_amount_invested = 0;
 	let total_received = 0;
@@ -76,11 +79,11 @@ const graphLineUp = (loans = []) => {
 		blocks: [
 			{
 				title: 'Total Amount Invested',
-				value: total_amount_invested.toFixed(2),
+				value: `$${curencyFormatter.format(total_amount_invested.toFixed(2))}`,
 			},
 			{
 				title: 'Total Received',
-				value: total_received.toFixed(2),
+				value: `$${curencyFormatter.format(total_received.toFixed(2))}`,
 			},
 			{
 				title: '% of Late Payments',
@@ -88,15 +91,15 @@ const graphLineUp = (loans = []) => {
 			},
 			{
 				title: 'Total Princ. Lost',
-				value: total_princ_lost.toFixed(2),
+				value: `$${curencyFormatter.format(total_princ_lost.toFixed(2))}`,
 			},
 			{
 				title: 'Total Princ. Received',
-				value: total_princ_received.toFixed(2),
+				value: `$${curencyFormatter.format(total_princ_received.toFixed(2))}`,
 			},
 			{
 				title: 'Total Princ. Pending',
-				value: (total_princ_pending).toFixed(2),
+				value: `$${curencyFormatter.format((total_princ_pending).toFixed(2))}`,
 			},
 			{
 				title: 'Initial Expected Returns',

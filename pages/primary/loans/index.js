@@ -13,14 +13,14 @@ const Loans = () => {
 		'Pending Loans',
 		'Rejected Loans',
 		'Approved Loans',
-		'Approved Graphs',
+		'Approved Stats',
 		'Completed Loans',
-		'Completed Graphs',
+		'Completed Stats',
 	];
 	const [loans, setLoans] = useState(null);
 	const [selectedNav, setSelectedNav] = useState(navList[0]);
 	const getLoans = async (index) => {
-		if(navList[index].includes("Graph")) return setSelectedNav(navList[index]);
+		if(navList[index].includes("Stats")) return setSelectedNav(navList[index]);
 		const baseURL = `primaryLenders/loans/${navList[index].split(" ")[0].toLowerCase()}`;
 		const { data: { loans } } = await axios.get(baseURL,
 			{
@@ -29,14 +29,14 @@ const Loans = () => {
 				}
 			}
 		);
-		await setLoans(loans)
-		await setSelectedNav(navList[index])
+		setLoans(loans)
+		setSelectedNav(navList[index])
 	}
 
 	useEffect(async() => {
 		getLoans(0)
 	}, [])
-	
+
 	return (
 		<ThemeContext.Consumer>
 			{(theme) => {
@@ -58,7 +58,7 @@ const Loans = () => {
 								}}
 							/>
 						</Box>
-						{selectedNav.includes("Graph") ? (
+						{selectedNav.includes("Stats") ? (
 							<Box key={Math.random()}>
 								<GraphView selectedNav={selectedNav} />
 							</Box>

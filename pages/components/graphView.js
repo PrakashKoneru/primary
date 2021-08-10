@@ -96,7 +96,10 @@ const GraphView = ({ selectedNav, ...props }) => {
 
 	// let loansByGrade = loansBySelectedGroup('loan_grade')
 	let loansByMonth = loansBySelectedGroup('issue_month');
-	let loansByMonthGraphData = loansByMonth && Object.keys(loansByMonth).map((each) => {
+	var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+	let loansByMonthGraphData = loansByMonth && Object.keys(loansByMonth).sort(function(a, b){
+		return months.indexOf(a) - months.indexOf(b);
+	}).map((each) => {
 		return {
 			xAxis: each,
 			monthTotal: loansByMonth[each].loan_amnt

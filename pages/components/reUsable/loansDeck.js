@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Input, Flex, Container, Select, Button } from '@chakra-ui/react';
 import { ThemeContext } from '../../_app';
 import fieldLineUp from '../../../utils/fieldLineUp';
@@ -24,6 +24,10 @@ const LoansDeck = ({ loans, key, sortBy, filterBy }, ref) => {
 	// 		setLoansToRender(loans)
 	// 	})
 	// }
+
+	useEffect(async() => {
+		setLoansToRender(loans)
+	})
 
 	return (
 		<ThemeContext.Consumer>

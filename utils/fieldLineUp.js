@@ -30,7 +30,7 @@ const fieldLineUp = [
 	{
 		title: 'Payment Prob.',
 		def: 'default_probability_percent_at_issue',
-		format: (value) => { return `${(100 - Number(value).toFixed(2))}%` }
+		format: (value) => { return `${(100 - Number(value).toFixed(2)).toFixed(2)}%` }
 	},
 ];
 

@@ -95,46 +95,52 @@ const LoanCard = ({ loan, setLoansToRender, index }, ref) => {
 									justifyContent="flex-end"
 									flexWrap="wrap"
 								>
-									<Button
-										width="110px"
-										variant="loanCard"
-										style={{background: '#179942', color: 'white'}}
-										onClick={() => updateLoan({
-											loan_id: loan.loan_id,
-											approval_status: 'approved'
-										})}
-										// disabled={loadingState}
-									>
-										Approve
-									</Button>
-									<Button
-										ml="15px"
-										width="110px"
-										variant="loanCard"
-										style={{background: '#FA1103', color: 'white'}}
-										onClick={() => updateLoan({
-											loan_id: loan.loan_id,
-											approval_status: 'rejected'
-										})}
-										// disabled={loadingState}
-									>
-										Reject
-									</Button>
-									<Button
-										mt={{sm: "10px", md: "0px"}}
-										ml="15px"
-										width="110px"
-										variant="loanCard"
-										onClick={() => updateData('pending')}
-										// disabled={loadingState}
-										style={{background: '#19858F', color: 'white'}}
-										onClick={() => updateLoan({
-											loan_id: loan.loan_id,
-											approval_status: 'pending'
-										})}
-									>
-										Decide Later
-									</Button>
+									{(loan.approval_status === "new" || loan.approval_status === "pending") ? (
+										<Button
+											width="110px"
+											variant="loanCard"
+											style={{background: '#179942', color: 'white'}}
+											onClick={() => updateLoan({
+												loan_id: loan.loan_id,
+												approval_status: 'approved'
+											})}
+											// disabled={loadingState}
+										>
+											Approve
+										</Button>
+									) : null}
+									{(loan.approval_status === "new" || loan.approval_status === "pending") ? (
+										<Button
+											ml="15px"
+											width="110px"
+											variant="loanCard"
+											style={{background: '#FA1103', color: 'white'}}
+											onClick={() => updateLoan({
+												loan_id: loan.loan_id,
+												approval_status: 'rejected'
+											})}
+											// disabled={loadingState}
+										>
+											Reject
+										</Button>
+									) : null}
+									{(loan.approval_status === "new") ? (
+										<Button
+											mt={{sm: "10px", md: "0px"}}
+											ml="15px"
+											width="110px"
+											variant="loanCard"
+											onClick={() => updateData('pending')}
+											// disabled={loadingState}
+											style={{background: '#19858F', color: 'white'}}
+											onClick={() => updateLoan({
+												loan_id: loan.loan_id,
+												approval_status: 'pending'
+											})}
+										>
+											Decide Later
+										</Button>
+									) : null}
 									<Button
 										mt={{sm: "10px", md: "0px"}}
 										ml="15px"

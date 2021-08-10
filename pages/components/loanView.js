@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Input, Flex, Container, Select } from '@chakra-ui/react';
+import { Box, Input, Flex, Container, Select, Button } from '@chakra-ui/react';
 import axios from 'axios';
 import SubNav from './reUsable/SubNav';
 import LoansDeck from './reUsable/loansDeck';
@@ -7,6 +7,7 @@ import { ThemeContext } from '../_app';
 import fieldLineUp from '../../utils/fieldLineUp';
 
 const LoanView = ({ loans }) => {
+	const [loading, setLoading] = useState(false);
 	const [sortBy, setSortBy] = useState('loan_amnt');
 	const [filterBy, setFilterBy] = useState(null);
 
@@ -33,7 +34,11 @@ const LoanView = ({ loans }) => {
 											<Select
 												name="loans"
 												id="loans"
-												onChange={(e) => setSortBy(e.target.value)}
+												onChange={(e) => {
+													setLoading(true)
+													setTimeout(() => setLoading(false), 100)
+													setSortBy(e.target.value)
+												}}
 												style = {{border: `1px solid ${theme.colors.gray}`}}
 											>
 												{fieldLineUp.map((item) => {
@@ -83,7 +88,9 @@ const LoanView = ({ loans }) => {
 													<div style={{display: 'flex', marginTop: '7px'}}>
 														<Select 
 															style={{ marginTop: '0px', fontSize: '14px', border: '1px solid rgba(224,210,210, 0.6)'}}
-															onChange={(e) => setFilterBy(e.target.value)}
+															onChange={(e) => {
+																setFilterBy(e.target.value)
+															}}
 														>
 															<option value="">---</option>
 															<option value="A">A</option>
@@ -92,11 +99,20 @@ const LoanView = ({ loans }) => {
 														</Select>
 													</div>
 												</div>
+												<Flex
+													justifyContent="flex-end"
+												>
+													<Button
+														mt="20px"
+													>
+														Apply Filters
+													</Button>
+												</Flex>
 											</div>
 										</div>
 									</Box>
 								</Box>
-								{loans ? (
+								{loans && !loading ? (
 									<LoansDeck
 										loans={loans}
 										sortBy={sortBy}
