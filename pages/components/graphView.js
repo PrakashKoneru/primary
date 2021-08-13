@@ -68,10 +68,26 @@ const GraphView = ({ selectedNav, ...props }) => {
 			categorySum: 0
 		}
 	};
+
+	const barGraphDataByMonth = {
+		'Jan': 'Jan',
+		'Feb': 'Feb',
+		'Mar': 'Mar',
+		'Apr': 'Apr', 
+		'May': 'May', 
+		'Jun': 'Jun', 
+		'Jul': 'Jul', 
+		'Aug': 'Aug', 
+		'Sep': 'Sep', 
+		'Oct': 'Oct', 
+		'Nov': 'Nov', 
+		'Dec': 'Dec'
+	};
 	
 	let approvedLoansMin = 1000000000000000000;
 	let approvedLoansMax = 0;
 	const barGraphDataHelper = approvedLoans && approvedLoans.map((each) => {
+		// calculates the sum of each loan category
 		if(Number(each.loan_amnt) > approvedLoansMax) approvedLoansMax = Number(each.loan_amnt);
 		if(Number(each.loan_amnt) < approvedLoansMin) approvedLoansMin = Number(each.loan_amnt);
 		if(each.loan_grade === 'A') { barGraphDataByGrade['A']['categorySum']+= Number(each.loan_amnt) }
@@ -96,13 +112,22 @@ const GraphView = ({ selectedNav, ...props }) => {
 
 	// let loansByGrade = loansBySelectedGroup('loan_grade')
 	let loansByMonth = loansBySelectedGroup('issue_month');
+	let loansByAllMonths = { ...barGraphDataByMonth, ...loansByMonth }
 	var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-	let loansByMonthGraphData = loansByMonth && Object.keys(loansByMonth).sort(function(a, b){
+	let loansByMonthGraphData = loansByMonth && Object.keys(loansByAllMonths).sort(function(a, b){
 		return months.indexOf(a) - months.indexOf(b);
 	}).map((each) => {
-		return {
-			xAxis: each,
-			monthTotal: loansByMonth[each].loan_amnt
+		console.log(each)
+		if (loansByMonth[each]) {
+			return {
+				xAxis: each,
+				monthTotal: loansByMonth[each].loan_amnt
+			}
+		} else {
+			return {
+				xAxis: each,
+				monthTotal: 0
+			}
 		}
 	})
 	const graphLineUpResult = graphLineUp(approvedLoans);
@@ -193,7 +218,8 @@ const GraphView = ({ selectedNav, ...props }) => {
 									<XAxis
 										dataKey="category"
 										fontSize="12"
-										dy='25'
+										// angle="-20"
+										// tickMargin={9}
 									/>
 									<YAxis
 										type="number"
@@ -233,7 +259,9 @@ const GraphView = ({ selectedNav, ...props }) => {
 									<XAxis
 										dataKey="xAxis"
 										fontSize="12"
-										dy='25'
+										angle="-50"
+										interval={0}
+										tickMargin={9}
 									/>
 									<YAxis
 										type="number"
