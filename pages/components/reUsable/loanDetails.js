@@ -6,10 +6,10 @@ import Cookies from "js-cookie";
 import loanFieldGroups from '../../../utils/loanFieldGroups';
 import { ThemeContext } from '../../_app';
 
-const LoanDetails = () => {
+const LoanDetails = ({ loan }) => {
 	// Figure a better way to extract loan ID than from route. try to avoid using loan_id in route name.
 	const router = useRouter()
-  const { id } = router.query
+  const id = loan.loan_id;
 	const [loanDetails, setLoanDetails] = useState();
 	const [selectedGroup, setSelectedGroup] = useState(null);
 

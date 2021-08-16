@@ -1,13 +1,28 @@
 import React, { useState } from 'react';
-import { Box, Input, Flex, Container, Select, Button } from '@chakra-ui/react';
+import {
+	Box,
+	Input,
+	Flex,
+	Container,
+	Select,
+	Button,
+	Modal,
+	ModalOverlay,
+	ModalContent,
+	ModalHeader,
+	ModalBody,
+	ModalCloseButton,
+} from '@chakra-ui/react';
 import { ThemeContext } from '../../_app';
 import fieldLineUp from '../../../utils/fieldLineUp';
 import Cookies from "js-cookie";
 import axios from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import LoanDetails from './loanDetails';
 
 const LoanCard = ({ loan, setLoansToRender, index }, ref) => {
+	const [showModal, setShowModal] = useState(false)
 	const [showActionNotification, setActionNotification] = useState(false)
 	const router = useRouter();
 	const updateLoan = ({ loan_id, approval_status }) => {
@@ -147,7 +162,7 @@ const LoanCard = ({ loan, setLoansToRender, index }, ref) => {
 										width="110px"
 										variant="loanCard"
 										onClick={() => {
-											router.push(`/primary/loans/${loan.loan_id}`)
+											setShowModal(true)
 										}}
 									>
 										All Details
@@ -155,6 +170,22 @@ const LoanCard = ({ loan, setLoansToRender, index }, ref) => {
 								</Flex>
 							</Box>
 						</Flex>
+						<Modal
+							isOpen={showModal}
+							onClose={() => setShowModal(false)}
+							// size="full"
+						>
+							<ModalOverlay />
+							<ModalContent maxW="56rem">
+								<ModalHeader>Loan Details</ModalHeader>
+								<ModalCloseButton />
+								<ModalBody>
+									<LoanDetails
+										loan={loan}
+									/>
+								</ModalBody>
+							</ModalContent>
+						</Modal>
 					</div>
 				)
 			}}
