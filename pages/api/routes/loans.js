@@ -33,13 +33,13 @@ router.get("/new", async (req, res) => {
 
 router.post("/details", async (req, res) => {
 	try {
-		const { loan_id, lender_id } = req.body;
+		const { loan_id } = req.body;
 		const loan = await pool().query("SELECT * FROM loans WHERE loan_id = $1", [loan_id]);
 		if(loan.rows.length === 0) {
 			res.status(404).send("Invalid Request")
 		}
 
-		if(loan.rows[0].approval_status === "approved" && loan.rows[0].approver_id != lender_id) {
+		if(loan.rows[0].approval_status === "approved" && loan.rows[0].approver_id != req.lender_id) {
 			res.status(401).send("Invalid Request")
 		}
 

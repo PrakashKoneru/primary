@@ -9,7 +9,7 @@ import { ThemeContext } from '../../_app';
 const LoanDetails = ({ loan }) => {
 	// Figure a better way to extract loan ID than from route. try to avoid using loan_id in route name.
 	const router = useRouter()
-  const id = loan.loan_id;
+  const id = loan && loan.loan_id;
 	const [loanDetails, setLoanDetails] = useState();
 	const [selectedGroup, setSelectedGroup] = useState(null);
 
