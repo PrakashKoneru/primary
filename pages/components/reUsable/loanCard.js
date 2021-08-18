@@ -21,11 +21,12 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import LoanDetails from './loanDetails';
 
-const LoanCard = ({ loan, setLoansToRender, index }, ref) => {
+const LoanCard = ({ loan, setLoansToRender, index, setLoanCounts }, ref) => {
 	const [showModal, setShowModal] = useState(false)
 	const [showActionNotification, setActionNotification] = useState(false)
 	const router = useRouter();
 	const updateLoan = ({ loan_id, approval_status }) => {
+		console.log(approval_status);
 		setActionNotification(approval_status)
 		const baseURL =  '/primary/primaryLenders/loans/update';
 		axios.post(baseURL,
@@ -35,8 +36,9 @@ const LoanCard = ({ loan, setLoansToRender, index }, ref) => {
 					pToken: Cookies.get('pToken')
 				}
 			}
-		).then(({ data: { loans } }) => {
+		).then(({ data: { loans, loanCount } }) => {
 			setLoansToRender(loans)
+			setLoanCounts({ ...loanCount })
 		})
 	}
 
@@ -104,7 +106,7 @@ const LoanCard = ({ loan, setLoansToRender, index }, ref) => {
 									)
 								})}
 							</Flex>
-							<Box w="100%" mt="10px">
+							<Box w="100%">
 								<Flex
 									w="100%"
 									justifyContent="flex-end"
@@ -119,6 +121,7 @@ const LoanCard = ({ loan, setLoansToRender, index }, ref) => {
 												loan_id: loan.loan_id,
 												approval_status: 'approved'
 											})}
+											mt="10px"
 											// disabled={loadingState}
 										>
 											Approve
@@ -135,6 +138,7 @@ const LoanCard = ({ loan, setLoansToRender, index }, ref) => {
 												approval_status: 'rejected'
 											})}
 											// disabled={loadingState}
+											mt="10px"
 										>
 											Reject
 										</Button>
@@ -152,6 +156,7 @@ const LoanCard = ({ loan, setLoansToRender, index }, ref) => {
 												loan_id: loan.loan_id,
 												approval_status: 'pending'
 											})}
+											mt="10px"
 										>
 											Decide Later
 										</Button>
@@ -164,6 +169,7 @@ const LoanCard = ({ loan, setLoansToRender, index }, ref) => {
 										onClick={() => {
 											setShowModal(true)
 										}}
+										mt="10px"
 									>
 										All Details
 									</Button>

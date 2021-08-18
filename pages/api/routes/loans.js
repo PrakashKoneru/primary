@@ -3,6 +3,24 @@ const moment = require("moment");
 const router = express.Router();
 const pool = require("../db.js");
 
+router.get("/counts", async (req, res) => {
+	try {
+		const newLoans = await pool().query("SELECT count(*) AS count FROM loans WHERE approval_status = $1", ["new"]);
+		const pendingLoans = await pool().query("SELECT count(*) AS count FROM loans WHERE approval_status = $1", ["pending"]);
+		const rejectedLoans = await pool().query("SELECT count(*) AS count FROM loans WHERE approval_status = $1 AND $2 = ANY (rejected_ids)", ["rejected", req.lender_id]);
+		const approvedLoans = await pool().query("SELECT count(*) AS count FROM loans WHERE approval_status = $1 AND approver_id = $2", ["approved", req.lender_id]);
+		return res.json({ 
+			'New Loans': newLoans.rows[0].count,
+			'Pending Loans': pendingLoans.rows[0].count,
+			'Rejected Loans': rejectedLoans.rows[0].count,
+			'Approved Loans': approvedLoans.rows[0].count
+		});
+	} catch(err) {
+		console.error(err.message);
+		res.status(500).send("Server error");
+	}
+});
+
 router.get("/new", async (req, res) => {
 	try {
 		const loans = await pool().query("SELECT loan_id, loan_amnt, term, interest_rate_percent, annual_inc, loan_sub_grade, default_probability_percent_at_issue, approval_status FROM loans WHERE approval_status = $1 LIMIT 100", ["new"]);
@@ -107,6 +125,7 @@ router.post("/update", async (req, res) => {
 		const loan = await pool().query("SELECT * FROM loans WHERE loan_id = $1", [
 			loan_id
 		]);
+		let updatedLoans;
 
 		if(loan.rows.length === 0) {
 			res.status(404).send("Invalid Request")
@@ -125,8 +144,8 @@ router.post("/update", async (req, res) => {
 				if (error) {
 					throw error
 				}
-				const loans = await pool().query("SELECT loan_id, loan_amnt, term, interest_rate_percent, annual_inc, loan_sub_grade, default_probability_percent_at_issue, approval_status FROM loans WHERE approval_status = $1 LIMIT 100", ["new"]);
-				return res.json({ loans: loans.rows });
+				updatedLoans = await pool().query("SELECT loan_id, loan_amnt, term, interest_rate_percent, annual_inc, loan_sub_grade, default_probability_percent_at_issue, approval_status FROM loans WHERE approval_status = $1 LIMIT 100", ["new"]);
+				// return res.json({ loans: loans.rows });
 			})
 		}
 
@@ -139,8 +158,8 @@ router.post("/update", async (req, res) => {
 				if (error) {
 					throw error
 				}
-				const loans = await pool().query("SELECT loan_id, loan_amnt, term, interest_rate_percent, annual_inc, loan_sub_grade, default_probability_percent_at_issue, approval_status FROM loans WHERE approval_status = $1 LIMIT 100", ["new"]);
-				return res.json({ loans: loans.rows });
+				updatedLoans = await pool().query("SELECT loan_id, loan_amnt, term, interest_rate_percent, annual_inc, loan_sub_grade, default_probability_percent_at_issue, approval_status FROM loans WHERE approval_status = $1 LIMIT 100", ["new"]);
+				// return res.json({ loans: loans.rows });
 			})
 		}
 
@@ -153,10 +172,24 @@ router.post("/update", async (req, res) => {
 				if (error) {
 					throw error
 				}
-				const loans = await pool().query("SELECT loan_id, loan_amnt, term, interest_rate_percent, annual_inc, loan_sub_grade, default_probability_percent_at_issue, approval_status FROM loans WHERE approval_status = $1 LIMIT 100", ["new"]);
-				return res.json({ loans: loans.rows });
+				updatedLoans = await pool().query("SELECT loan_id, loan_amnt, term, interest_rate_percent, annual_inc, loan_sub_grade, default_probability_percent_at_issue, approval_status FROM loans WHERE approval_status = $1 LIMIT 100", ["new"]);
+				// return res.json({ loans: loans.rows });
 			})
 		}
+
+		const newLoans = await pool().query("SELECT count(*) AS count FROM loans WHERE approval_status = $1", ["new"]);
+		const pendingLoans = await pool().query("SELECT count(*) AS count FROM loans WHERE approval_status = $1", ["pending"]);
+		const rejectedLoans = await pool().query("SELECT count(*) AS count FROM loans WHERE approval_status = $1 AND $2 = ANY (rejected_ids)", ["rejected", req.lender_id]);
+		const approvedLoans = await pool().query("SELECT count(*) AS count FROM loans WHERE approval_status = $1 AND approver_id = $2", ["approved", req.lender_id]);
+		return res.json({
+			loanCount: {
+				'New Loans': newLoans.rows[0].count,
+				'Pending Loans': pendingLoans.rows[0].count,
+				'Rejected Loans': rejectedLoans.rows[0].count,
+				'Approved Loans': approvedLoans.rows[0].count
+			},
+			loans: updatedLoans.rows
+		});
 	} catch(err) {
 		console.error(err.message);
 		res.status(500).send("Server error");

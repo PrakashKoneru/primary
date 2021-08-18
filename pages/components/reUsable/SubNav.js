@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Box, Input, Flex } from '@chakra-ui/react';
 import { ThemeContext } from '../../_app';
 
-const SubNav = ({ navList = [], onClick, ...rest }) => {
+const SubNav = ({ navList = [], onClick, loanCounts = {}, ...rest }) => {
 	const [activeIndex, setActiveIndex] = useState(0)
 	return (
 		<ThemeContext.Consumer>
@@ -17,7 +17,7 @@ const SubNav = ({ navList = [], onClick, ...rest }) => {
 								<Flex
 									justifyContent="center"
 									alignItems="center"
-									mr={{ md: "10px", sm: "0px" }}
+									// mr={{ md: "10px", sm: "0px" }}
 									ml={{ md: "0px", sm: index%2 != 0 ? '6px' : "0px" }}
 									mb={{ md: index=== navList.length ? "0px" : "10px", sm: "5px" }}
 									w={{
@@ -28,9 +28,9 @@ const SubNav = ({ navList = [], onClick, ...rest }) => {
 										sm: "40px"
 									}}
 									mt={{ sm: "10px", md:"0px" }}
-									padding="5px 25px"
+									padding="5px 15px"
 									border={activeIndex === index ? `1px solid ${theme.colors.primary}` : `1px solid ${theme.colors.gray}`}
-									borderRadius="3px"
+									// borderRadius="3px"
 									bg={activeIndex === index ? theme.colors.primary : 'white'}
 									color={activeIndex === index ? 'white' : 'black'}
 									key={index}
@@ -40,7 +40,7 @@ const SubNav = ({ navList = [], onClick, ...rest }) => {
 									}}
 									cursor="pointer"
 								>
-									{each}
+									{loanCounts[each] ? `${each} (${loanCounts[each]})` : each}
 								</Flex>
 							)
 						})}	

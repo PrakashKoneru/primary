@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import LoanCard from './loanCard';
 
-const LoansDeck = ({ loans, key, sortBy, filterBy }, ref) => {
+const LoansDeck = ({ loans, key, sortBy, filterBy, setLoanCounts }, ref) => {
 	const [loansToRender, setLoansToRender] = useState(loans);
 	const router = useRouter();
 	// const updateLoan = ({ loan_id, approval_status }) => {
@@ -27,7 +27,7 @@ const LoansDeck = ({ loans, key, sortBy, filterBy }, ref) => {
 
 	useEffect(async() => {
 		setLoansToRender(loans)
-	})
+	}, [loans])
 
 	return (
 		<ThemeContext.Consumer>
@@ -51,6 +51,7 @@ const LoansDeck = ({ loans, key, sortBy, filterBy }, ref) => {
 										index={index}
 										loan={loan}
 										setLoansToRender={setLoansToRender}
+										setLoanCounts={setLoanCounts}
 									/>
 								</div>
 							)

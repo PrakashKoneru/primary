@@ -18,6 +18,7 @@ const Loans = () => {
 		'Completed Stats',
 	];
 	const [loans, setLoans] = useState(null);
+	const [loanCounts, setLoanCounts] = useState(null);
 	const [selectedNav, setSelectedNav] = useState(navList[0]);
 	const getLoans = async (index) => {
 		if(navList[index].includes("Stats")) return setSelectedNav(navList[index]);
@@ -33,13 +34,43 @@ const Loans = () => {
 		setSelectedNav(navList[index])
 	}
 
+	const getLoanCounts = async () => {
+		const baseURL = `primaryLenders/loans/counts`;
+		const { data: { ...counts } } = await axios.get(baseURL,
+			{
+				headers: {
+					pToken: Cookies.get('pToken')
+				}
+			}
+		);
+		setLoanCounts(counts)
+	}
+
 	useEffect(async() => {
 		getLoans(0)
+		getLoanCounts();
 	}, [])
 
 	return (
 		<ThemeContext.Consumer>
 			{(theme) => {
+				if(!loans || !loanCounts) {
+					return (
+						<Flex
+							w="100%"
+							height={{ md: "calc(100vh - 80px)", sm: "auto" }}
+							overflowY="scroll"
+							ml={{ md: "30px", sm: "0px" }}
+							mt={{ md: "0px", sm: "30px" }}
+							alignItems="center"
+							justifyContent="center"
+							fontSize="50px"
+							color={theme.colors.secondary}
+						>
+							Loading...
+						</Flex>
+					)
+				}
 				return (
 					<Container
 						display="block"
@@ -56,6 +87,7 @@ const Loans = () => {
 								onClick={(index) => {
 									getLoans(index)
 								}}
+								loanCounts={loanCounts}
 							/>
 						</Box>
 						{selectedNav.includes("Stats") ? (
@@ -65,6 +97,7 @@ const Loans = () => {
 						) : 
 							<LoanView
 								loans={loans}
+								setLoanCounts={setLoanCounts}
 							/>
 						}
 					</Container>
