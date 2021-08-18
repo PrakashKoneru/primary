@@ -144,8 +144,11 @@ router.post("/update", async (req, res) => {
 				if (error) {
 					throw error
 				}
-				updatedLoans = await pool().query("SELECT loan_id, loan_amnt, term, interest_rate_percent, annual_inc, loan_sub_grade, default_probability_percent_at_issue, approval_status FROM loans WHERE approval_status = $1 LIMIT 100", ["new"]);
-				// return res.json({ loans: loans.rows });
+				if (loan.rows[0].approval_status === 'pending') {
+					updatedLoans = await pool().query("SELECT loan_id, loan_amnt, term, interest_rate_percent, annual_inc, loan_sub_grade, default_probability_percent_at_issue, approval_status FROM loans WHERE approval_status = $1 LIMIT 100", ["pending"]);
+				} else {
+					updatedLoans = await pool().query("SELECT loan_id, loan_amnt, term, interest_rate_percent, annual_inc, loan_sub_grade, default_probability_percent_at_issue, approval_status FROM loans WHERE approval_status = $1 LIMIT 100", ["new"]);
+				}
 			})
 		}
 
@@ -172,7 +175,11 @@ router.post("/update", async (req, res) => {
 				if (error) {
 					throw error
 				}
-				updatedLoans = await pool().query("SELECT loan_id, loan_amnt, term, interest_rate_percent, annual_inc, loan_sub_grade, default_probability_percent_at_issue, approval_status FROM loans WHERE approval_status = $1 LIMIT 100", ["new"]);
+				if (loan.rows[0].approval_status === 'pending') {
+					updatedLoans = await pool().query("SELECT loan_id, loan_amnt, term, interest_rate_percent, annual_inc, loan_sub_grade, default_probability_percent_at_issue, approval_status FROM loans WHERE approval_status = $1 LIMIT 100", ["pending"]);
+				} else {
+					updatedLoans = await pool().query("SELECT loan_id, loan_amnt, term, interest_rate_percent, annual_inc, loan_sub_grade, default_probability_percent_at_issue, approval_status FROM loans WHERE approval_status = $1 LIMIT 100", ["new"]);
+				}
 				// return res.json({ loans: loans.rows });
 			})
 		}
