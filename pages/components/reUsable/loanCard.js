@@ -26,7 +26,6 @@ const LoanCard = ({ loan, setLoansToRender, index, setLoanCounts }, ref) => {
 	const [showActionNotification, setActionNotification] = useState(false)
 	const router = useRouter();
 	const updateLoan = ({ loan_id, approval_status }) => {
-		console.log(approval_status);
 		setActionNotification(approval_status)
 		const baseURL =  '/primary/primaryLenders/loans/update';
 		axios.post(baseURL,
@@ -41,7 +40,7 @@ const LoanCard = ({ loan, setLoansToRender, index, setLoanCounts }, ref) => {
 			setLoanCounts({ ...loanCount })
 		})
 	}
-
+	if (!loan) return null;
 	return (
 		<ThemeContext.Consumer>
 			{(theme) => {
