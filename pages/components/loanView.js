@@ -5,11 +5,27 @@ import SubNav from './reUsable/SubNav';
 import LoansDeck from './reUsable/loansDeck';
 import { ThemeContext } from '../_app';
 import fieldLineUp from '../../utils/fieldLineUp';
+import Cookies from "js-cookie";
 
-const LoanView = ({ loans, loanCounts, setLoanCounts }) => {
+const LoanView = ({ loans, setLoansToRender, setLoanCounts, selectedNav }) => {
 	const [loading, setLoading] = useState(false);
-	const [sortBy, setSortBy] = useState('loan_amnt');
+	// const [sortBy, setSortBy] = useState('loan_amnt');
 	const [filterBy, setFilterBy] = useState(null);
+
+	const sortLoans = (sortBy) => {
+		const baseURL =  '/primary/primaryLenders/loans/sort';
+		axios.post(baseURL,
+			{ sortBy, selectedNav },
+			{
+				headers: {
+					pToken: Cookies.get('pToken')
+				}
+			}
+		).then(({ data: { loans } }) => {
+			setLoansToRender(loans)
+			setLoading(false)
+		})
+	}
 
     return (
 			<ThemeContext.Consumer>
@@ -28,6 +44,7 @@ const LoanView = ({ loans, loanCounts, setLoanCounts }) => {
 									py="25px"
 									border={`1px solid ${theme.colors.gray}`}
 									borderRadius="3px"
+									key={selectedNav}
 								>
 									<div>
 										<div style={{ fontWeight: '700' }}>Sort By :</div>
@@ -36,8 +53,7 @@ const LoanView = ({ loans, loanCounts, setLoanCounts }) => {
 											id="loans"
 											onChange={(e) => {
 												setLoading(true)
-												setTimeout(() => setLoading(false), 100)
-												setSortBy(e.target.value)
+												sortLoans(e.target.value)
 											}}
 											style = {{border: `1px solid ${theme.colors.gray}`}}
 										>
@@ -115,7 +131,6 @@ const LoanView = ({ loans, loanCounts, setLoanCounts }) => {
 							{loans && !loading ? (
 								<LoansDeck
 									loans={loans}
-									sortBy={sortBy}
 									filterBy={filterBy}
 									setLoanCounts={setLoanCounts}
 								/>

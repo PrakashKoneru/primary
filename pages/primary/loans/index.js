@@ -97,7 +97,9 @@ const Loans = () => {
 						) : 
 							<LoanView
 								loans={loans}
+								setLoansToRender={setLoans}
 								setLoanCounts={setLoanCounts}
+								selectedNav={selectedNav.split(" ")[0].toLowerCase()}
 							/>
 						}
 					</Container>

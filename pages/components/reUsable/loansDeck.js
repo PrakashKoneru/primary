@@ -40,11 +40,7 @@ const LoansDeck = ({ loans, key, sortBy, filterBy, setLoanCounts }, ref) => {
 						ml={{ md: "30px", sm: "0px" }}
 						mt={{ md: "0px", sm: "30px" }}
 					>
-						{loansToRender && loansToRender.sort((a, b) => {
-							if(a[sortBy] < b[sortBy]) { return -1 }
-							if(a[sortBy] > b[sortBy]) { return 1 }
-							if(a[sortBy] === b[sortBy]) { return 0 }
-						}).map((loan, index) => {
+						{loansToRender && loansToRender.map((loan, index) => {
 							return (
 								<div key={Math.random()}>
 									<LoanCard
