@@ -14,9 +14,36 @@ router.post("/sort", async (req, res) => {
 	}
 });
 
-router.get("/filter", async (req, res) => {
+router.post("/filter", async (req, res) => {
+	let { fundedAmountMin, fundedAmountMax, annualIncomeMin, annualIncomeMax, loanGrade, selectedNav } = req.body;
 	try {
-		const loans = await pool().query("SELECT loan_id, loan_amnt, term, interest_rate_percent, annual_inc, loan_sub_grade, default_probability_percent_at_issue, approval_status FROM loans WHERE approval_status = $1 LIMIT 100", ["new"]);
+		const loans = await pool().query(
+			`SELECT 
+				loan_id,
+				loan_amnt,
+				term,
+				interest_rate_percent,
+				annual_inc,
+				loan_sub_grade,
+				default_probability_percent_at_issue,
+				approval_status
+			FROM
+				loans
+			WHERE
+				loan_amnt > $1
+			AND
+				loan_amnt < $2
+			AND
+				annual_inc > $3
+			AND
+				annual_inc < $4
+			AND
+				loan_grade LIKE $5
+			AND
+			approval_status = $6
+			LIMIT 100`,
+			[fundedAmountMin, fundedAmountMax, annualIncomeMin, annualIncomeMax, loanGrade, selectedNav]
+		);
 		return res.json({ loans: loans.rows });
 	} catch(err) {
 		console.error(err.message);
