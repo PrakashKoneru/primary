@@ -54,7 +54,7 @@ export default function Login() {
                 justifyContent="center"
               >
                 <Box fontSize="40px">
-                  Lender Login
+                  Lender Log In
                 </Box>
                 {submissionError && (
                   <Box
@@ -116,7 +116,7 @@ export default function Login() {
                     w="150px"
                     type="submit"
                   >
-                    Login
+                    Log In
                   </Button>
                 </Flex>
               </Box>
