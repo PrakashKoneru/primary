@@ -28,6 +28,7 @@ const NavLink = ({ children }) => (
 );
 
 export default function Simple() {
+	console.log('');
 	const isLoggedIn = Cookies.get('pToken');
 	const [disableScroll, setScroll] = useState(false);
 	const { isOpen, onOpen, onClose } = useDisclosure();
